@@ -13,3 +13,6 @@ logs/
 .vscode
 *.csv
 *.dat
+.bloop
+.bsp
+project/
