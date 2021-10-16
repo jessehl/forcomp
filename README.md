@@ -1,1 +1,3 @@
-"# Functional Proramming Principles in Scala, Final Exercise" 
+# Functional Programming Principles in Scala, Final Exercise
+
+
