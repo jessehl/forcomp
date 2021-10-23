@@ -23,6 +23,7 @@ object Anagrams extends AnagramsInterface:
    */
   type Occurrences = List[(Char, Int)]
 
+  
   /** The dictionary is simply a sequence of words.
    *  It is predefined and obtained as a sequence using the utility method `loadDictionary`.
    */
@@ -72,6 +73,9 @@ object Anagrams extends AnagramsInterface:
     dictionaryByOccurrences.getOrElse(wordOccurrences(word), List.empty)
   }
 
+  // Added type that is useful in implementing below method. 
+  type Occurrence = (Char, Int)
+
   /** Returns the list of all subsets of the occurrence list.
    *  This includes the occurrence itself, i.e. `List(('k', 1), ('o', 1))`
    *  is a subset of `List(('k', 1), ('o', 1))`.
@@ -94,7 +98,20 @@ object Anagrams extends AnagramsInterface:
    *  Note that the order of the occurrence list subsets does not matter -- the subsets
    *  in the example above could have been displayed in some other order.
    */
-  def combinations(occurrences: Occurrences): List[Occurrences] = ???
+  def combinations(occurrences: Occurrences): List[Occurrences] = {
+    if(occurrences.isEmpty) List(List()): List[Occurrences]
+    else for {
+      subset: Occurrence <- (0 to occurrences.head._2).toList.map((occurrences.head._1, _))
+      subsets: Occurrences <- combinations(occurrences.tail)
+      }
+      // Filter out Occurrences with a frequency of 0. When all Occurrences ...
+      // ... have a frequency of 0, this will yield an empty list - which happens exactly once. 
+      yield (subset :: subsets).filter(_._2 > 0) 
+  } 
+  
+
+
+
 
   /** Subtracts occurrence list `y` from occurrence list `x`.
    *
