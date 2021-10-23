@@ -124,7 +124,12 @@ object Anagrams extends AnagramsInterface:
    *  Note: the resulting value is an occurrence - meaning it is sorted
    *  and has no zero-entries.
    */
-  def subtract(x: Occurrences, y: Occurrences): Occurrences = ???
+  def subtract(x: Occurrences, y: Occurrences): Occurrences = {
+    val yMap = y.toMap.withDefaultValue(0)
+    for (char, freq) <- x 
+      if(yMap(char) < freq)
+      yield (char, freq - yMap(char))
+  }
 
   /** Returns a list of all anagram sentences of the given sentence.
    *
