@@ -109,6 +109,7 @@ object Anagrams extends AnagramsInterface:
       yield (subset :: subsets).filter(_._2 > 0) 
   } 
 
+  
   /** Subtracts occurrence list `y` from occurrence list `x`.
    *
    *  The precondition is that the occurrence list `y` is a subset of
