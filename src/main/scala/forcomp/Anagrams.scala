@@ -98,21 +98,20 @@ object Anagrams extends AnagramsInterface:
    *  Note that the order of the occurrence list subsets does not matter -- the subsets
    *  in the example above could have been displayed in some other order.
    */
-  def combinations(occurrences: Occurrences): List[Occurrences] = {
-    if(occurrences.isEmpty) List(Nil): List[Occurrences]
-    else for {
-      subset: Occurrence <- (0 to occurrences.head._2).toList.map((occurrences.head._1, _))
-      subsets: Occurrences <- combinations(occurrences.tail)
-      }
-      // Filter out Occurrences with a frequency of 0. When all Occurrences ...
-      // ... have a frequency of 0, this will yield an empty list - which happens exactly once. 
-      yield (subset :: subsets).filter(_._2 > 0) 
-  } 
+  def combinations(occurrences: Occurrences): List[Occurrences] = occurrences match {
+    case Nil => List(List())
+    case (char, frequency) :: tail => { 
+      for 
+        subset: Occurrence <- (0 to frequency).toList.map((char, _))
+        subsets: Occurrences <- combinations(tail)
 
-
-
-
-
+      // Generate subsets including the frequency of 0. 
+      // The frequency of 0 internally represents the omission of a specific char.
+      // When all Occurrences have a frequency of 0, this will yield an empty list - which happens exactly once. 
+      // If generating a subset from (1 to n) instead, the subset where the character is omitted, would not be taken into account. 
+      yield (subset :: subsets).filter(_._2 > 0)
+    } 
+  }
 
   /** Subtracts occurrence list `y` from occurrence list `x`.
    *
@@ -127,7 +126,7 @@ object Anagrams extends AnagramsInterface:
   def subtract(x: Occurrences, y: Occurrences): Occurrences = {
     val yMap = y.toMap.withDefaultValue(0)
     for (char, freq) <- x 
-      if(yMap(char) < freq)
+      if(yMap(char) < freq) 
       yield (char, freq - yMap(char))
   }
 
