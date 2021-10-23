@@ -99,7 +99,7 @@ object Anagrams extends AnagramsInterface:
    *  in the example above could have been displayed in some other order.
    */
   def combinations(occurrences: Occurrences): List[Occurrences] = {
-    if(occurrences.isEmpty) List(List()): List[Occurrences]
+    if(occurrences.isEmpty) List(Nil): List[Occurrences]
     else for {
       subset: Occurrence <- (0 to occurrences.head._2).toList.map((occurrences.head._1, _))
       subsets: Occurrences <- combinations(occurrences.tail)
@@ -108,9 +108,6 @@ object Anagrams extends AnagramsInterface:
       // ... have a frequency of 0, this will yield an empty list - which happens exactly once. 
       yield (subset :: subsets).filter(_._2 > 0) 
   } 
-  
-
-
 
 
   /** Subtracts occurrence list `y` from occurrence list `x`.
