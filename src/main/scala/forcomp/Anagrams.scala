@@ -110,7 +110,10 @@ object Anagrams extends AnagramsInterface:
   } 
 
 
-  
+
+
+
+
   /** Subtracts occurrence list `y` from occurrence list `x`.
    *
    *  The precondition is that the occurrence list `y` is a subset of
