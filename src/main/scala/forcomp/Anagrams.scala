@@ -174,7 +174,7 @@ object Anagrams extends AnagramsInterface:
     getSentenceAnagrams(sentenceOccurrences(sentence))
   }
 
-/** Returns all sentence anagrams of the occurrence list. 
+/** Returns all sentence anagrams for the occurrence list. 
  * It gets all combinations of occurrences, and for every combination
  * it continues to find words until all letters (occurrences) have been exhausted. 
  */

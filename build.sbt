@@ -7,4 +7,4 @@ scalacOptions ++= Seq("-language:implicitConversions", "-deprecation")
 
 libraryDependencies += "org.scalameta" %% "munit" % "0.7.26" % Test
 
-(Compile, run) / mainClass := Some("forcomp.Main")
+// mainClass := Some("forcomp.Main")
