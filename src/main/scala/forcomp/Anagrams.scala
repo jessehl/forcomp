@@ -38,7 +38,7 @@ object Anagrams extends AnagramsInterface:
    */
   def wordOccurrences(w: Word): Occurrences = {
     w.toLowerCase
-    .groupBy(identity).map((k,v) => k -> v.length) // aggregate on length
+    .groupBy(identity).map((k,v) => k -> v.length) // group on letter, count occurrences
     .toList.sortBy(_._1) // return sorted list
   }
   
@@ -170,7 +170,23 @@ object Anagrams extends AnagramsInterface:
    *
    *  Note: There is only one anagram of an empty sentence.
    */
-  def sentenceAnagrams(sentence: Sentence): List[Sentence] = ???
+  def sentenceAnagrams(sentence: Sentence): List[Sentence] = {
+    getSentenceAnagrams(sentenceOccurrences(sentence))
+  }
+
+/** Returns all sentence anagrams of the occurrence list. 
+ * It gets all combinations of occurrences, and for every combination
+ * it continues to find words until all letter (occurrences) have been exhausted. 
+ */
+  def getSentenceAnagrams(occurrences: Occurrences): List[Sentence] = {
+    if(occurrences.isEmpty) List(List.empty) else 
+      for 
+        combination <- combinations(occurrences) 
+        word <- dictionaryByOccurrences.getOrElse(combination, List.empty)
+        sentence <- getSentenceAnagrams(subtract(occurrences, combination))
+      yield word :: sentence
+  }
+
 
 object Dictionary:
   def loadDictionary: List[String] =
