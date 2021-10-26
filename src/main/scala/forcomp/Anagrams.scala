@@ -176,7 +176,7 @@ object Anagrams extends AnagramsInterface:
 
 /** Returns all sentence anagrams of the occurrence list. 
  * It gets all combinations of occurrences, and for every combination
- * it continues to find words until all letter (occurrences) have been exhausted. 
+ * it continues to find words until all letters (occurrences) have been exhausted. 
  */
   def getSentenceAnagrams(occurrences: Occurrences): List[Sentence] = {
     if(occurrences.isEmpty) List(List.empty) else 
